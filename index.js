@@ -1,61 +1,151 @@
-// TODO: Include packages needed for this application
-var inquirer = require("inquirer");
+const inquirer = require("inquirer");
 const fs = require("fs");
-const generateMarkdown = require("./utils/generateMarkdown");
-// resarch path npm  path pachkage
 
-// TODO: Create an array of questions for user input
-const questions = [
-  {
-    type: "input",
-    name: "title",
-    message: "what is the title of your project?",
-  },
-  {
-    type: "input",
-    name: "description",
-    message: "what is a description of your project?",
-  },
-  {
-    type: "input",
-    name: "installation",
-    message: "how do you install your project?",
-  },
-  {
-    type: "list",
-    name: "license",
-    message: "what license does your project have?",
-    choices: ["mit", "..", "..", "none"],
-  },
-];
+const standardQuestions = () => {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "username",
+        message: "What is your GitHub username?",
+        validate(input) {
+          if (input === "") {
+            return "You must enter a valid username.";
+          } else {
+            return true;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "title",
+        message: "What is the title of your project?",
+        validate(input) {
+          if (input === "") {
+            return "You must enter a project title.";
+          } else {
+            return true;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "emailAddress",
+        message: "Enter your email address: ",
+        validate(input) {
+          if (input === "") {
+            return "You must enter a email address.";
+          } else {
+            return true;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "projectDescription",
+        message: "Provide a short description of your project: ",
+        validate(input) {
+          if (input === "") {
+            return "You must provide a description.";
+          } else {
+            return true;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "implement",
+        message: "Provide the steps required for implementing your project: ",
+      },
+      {
+        type: "input",
+        name: "applications",
+        message: "Provide a guide of the project: ",
+      },
+      {
+        type: "input",
+        name: "features",
+        message: "Provide features of the project: ",
+      },
+      {
+        type: "input",
+        name: "Credit",
+        message: "Provide a list of collaborators on the project (if any): ",
+      },
+      {
+        type: "list",
+        name: "License",
+        message: "Select a license: ",
+        choices: ["Boost Software", "GNU GPLv3", "Apache", "MIT"],
+      },
+    ])
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-  console.log(fileName, data);
+    .then((data) => {
+      const fname = `${data.title.toLowerCase().split("").join("")}.md`;
+
+      JSON.stringify(data, null, "/t");
+
+      fs.writeFile("./dist/" + fname, generateREADME(data, licenseBadge(data)), (err) =>
+        err ? console.log(data) : console.log("Successful!")
+      );
+    });
+};
+
+generateREADME = (answers, badge) =>
+  `
+${badge}
+# ${answers.title}
+## Description
+${answers.description}
+## Table of Contents
+ - [Installation](#installation)
+ - [Usage](#usage)
+ - [Features](#features)
+ - [Credits](#credits)
+ - [Contributing](#contributing)
+ - [Tests](#tests)
+ - [License](#License)
+ - [Questions](#questions)
+## Installation
+${answers.implement}
+## Usage
+${answers.applications}
+## Features
+${answers.features}
+## Credits
+${answers.Credit}
+## Tests
+${answers.Test}
+## License
+This project is licensed under the ${answers.License} license.
+## Questions
+If you have any questions, please use the contact information below:  
+https://github.com/${answers.username}  
+${answers.email}
+`;
+
+function licenseBadge(answers) {
+  switch (answers.License) {
+    case "MIT":
+      let badgeMIT =
+        "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
+      return badgeMIT;
+      break;
+    case "GNU GPLv3":
+      let badgeGNU =
+        "[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)";
+      return badgeGNU;
+      break;
+    case "Apache":
+      let badgeApache =
+        "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)";
+      return badgeApache;
+      break;
+  }
 }
 
-// TODO: Create a function to initialize app
 function init() {
-  inquirer.prompt(questions).then((answers) => {
-    console.log("generating answer json");
-    writeToFile("README.md", generateMarkdown(answers));
-  });
+  standardQuestions();
 }
 
-// Function call to initialize app
 init();
-
-// inquirer
-//   .prompt([
-//     /* Pass your questions in here */
-//   ])
-//   .then((answers) => {
-//     // Use user feedback for... whatever!!
-//   })
-//   .catch((error) => {
-//     if (error.isTtyError) {
-//       // Prompt couldn't be rendered in the current environment
-//     } else {
-//       // Something else went wrong
-//     }
-//   });
