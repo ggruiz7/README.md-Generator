@@ -35,4 +35,4 @@ View video for instructions of usage.
 ### Contact:
 
 - Github: https://github.com/ggruiz7
-- Email: garciagabriel1845@gmail.com
+- Email: garciagabriel1945@gmail.com
