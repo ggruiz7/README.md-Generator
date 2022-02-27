@@ -30,7 +30,7 @@ const standardQuestions = () => {
       },
       {
         type: "input",
-        name: "emailAddress",
+        name: "email",
         message: "Enter your email address: ",
         validate(input) {
           if (input === "") {
@@ -42,7 +42,7 @@ const standardQuestions = () => {
       },
       {
         type: "input",
-        name: "projectDescription",
+        name: "description",
         message: "Provide a short description of your project: ",
         validate(input) {
           if (input === "") {
@@ -114,8 +114,6 @@ ${answers.applications}
 ${answers.features}
 ## Credits
 ${answers.Credit}
-## Tests
-${answers.Test}
 ## License
 This project is licensed under the ${answers.License} license.
 ## Questions
