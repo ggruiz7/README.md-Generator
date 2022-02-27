@@ -8,10 +8,10 @@ Watch the video below to see how it works:
 
 ## Table of Contents:
 
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [Features](#features)
-    - [Questions](#questions)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Questions](#questions)
 
 ### Installation
 
