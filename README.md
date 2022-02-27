@@ -20,7 +20,7 @@ To use the README generator, you must install Node.js and the Inquirer npm packa
 ### Usage:
 
 View video for instructions of usage.
-![gif of README generator](./GIF/READMEgenerator.gif)
+![gif of README generator](./gif/READMEgenerator.gif)
 
 ### Features:
 
